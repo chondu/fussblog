@@ -1,18 +1,18 @@
-import { sql } from "@vercel/postgres";
+import {sql} from "@vercel/postgres";
 import "./main.css"
+import Item from "./item";
+import {itemClick} from "./events"
 
-export default async function Main({ params }) {
+export default async function Main({}) {
 
-    const { rows } = await sql`SELECT * from item`;
+    const {rows} = await sql`SELECT * from item`;
 
     return (
-        <div className="main">
-            {rows.map((row) => (
-                <div key={row.item_id} className="item">
-                    <img className="pictureType" src="/dir.svg" alt={row.item_type}/>
-                    {row.item_type}-{row.item_content}
-                </div>
-            ))}
+        <div>{
+            rows.map((row)=>(
+                <Item key={row.item_id} content={row.item_content}/>
+            ))
+        }
         </div>
     );
 }
